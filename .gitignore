@@ -1,0 +1,45 @@
+#*
+.~*
+.idea*
+local*
+data
+trash
+doc
+env
+ml
+static
+temp/
+java/demo-graph/www/data
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+.cache
+*.sqlite
+
+*.class
+.DS_Store
+#*.csv
+
+# intellig IDEA
+*.iml
+# IDE configuration
+.vscode
+
+temp/
+java/demo-graph/www/data
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.pyc
+*.log
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# secret
+secret.py
+
