@@ -6,6 +6,7 @@ energy (GSFE)
 
 import os
 import datetime
+import logging
 from images_generation import StructureGenerator
 from fireworks import LaunchPad
 from atomate.vasp.workflows.base.neb import get_wf_neb_from_endpoints
@@ -26,14 +27,13 @@ if not os.path.isdir(store_path):
     os.mkdir(store_path)
 endpoints_structures = stru_gen.get_endpoints_structure_from_yaml(
     layer, yaml_file, store_path)
-print("-"*20+"First Part Ending"+"-"*20)
-print(endpoints_structures)
-print("-"*20+"Second Part Starting"+"-"*20)
+logging.info("-"*20+"First Part Ending"+"-"*20)
+logging.info("endpoints_structures: {}".format(endpoints_structures))
+logging.info("-"*20+"Second Part Starting"+"-"*20)
 lpad = LaunchPad.auto_load()
 for key, value in endpoints_structures.items():
-    print("-"*20+"Welcome to the magic world of Atomate"+"-"*20)
-    print("endpoints_structures_key:\n", key)
-    print('delta_coords:\n', value[-1])
+    logging.info("-"*20+"Welcome to the magic world of Atomate"+"-"*20)
+    logging.info('delta_coords: {} \n'.format(value[-1]))
     wf = get_wf_neb_from_endpoints(value[0], value[0:2], user_incar_settings=[
         {'ICHARG': 2, 'EDIFF': 5E-5, 'EDIFFG': -0.01, 'IBRION': 2},
         {'ICHARG': 2, 'EDIFF': 5E-5, 'EDIFFG': -0.01, 'IBRION': 2},

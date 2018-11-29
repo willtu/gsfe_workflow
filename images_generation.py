@@ -38,7 +38,7 @@ class StructureGenerator():
         self.supercell_matrix = supercell_matrix
         self.isdope = isdope
         self.dopant = dopant
-        # if user_input is a path where store the POSCAR file  
+        # if user_input is a path where store the POSCAR file
         if(os.path.isfile(user_input)):
             pos = Poscar.from_file(user_input)
             struc = SpacegroupAnalyzer(pos.structure)
@@ -54,14 +54,14 @@ class StructureGenerator():
     def get_interplanar_spacing(self, structure, surface):
         xc = XRDCalculator()
         xrd_data = xc.get_xrd_data(structure)
-        print(xrd_data)
+        logging.info("xrd_data: {}".format(xrd_data))
         sort_data = pd.DataFrame(xrd_data, columns=["two_theta", "intensity", 
                                  "miller_index_dict", "d_hkl"])
         matcher = (1, 1, 1)
-        print(sort_data)
+        logging.info("sort_data: {}".format(sort_data))
         flag = 0
         for mid in sort_data.miller_index_dict:
-            print("mid:", mid)
+            logging.info("mid: {}".format(mid))
             for key, value in mid.items():
                 key = reduce_vector(key)
                 if (surface == key):
@@ -69,10 +69,10 @@ class StructureGenerator():
                     flag = 1
                     break
                 else:
-                    print("*"*50)
+                    logging.info("*"*50)
                     logging.info("key: {}".format(key))
                     logging.info("value {}".format(value))
-                    print("*"*50)
+                    logging.info("*"*50)
             if flag == 1:
                 break
         spacing = sort_data[sort_data.miller_index_dict == matcher].d_hkl.values[0]
@@ -165,15 +165,15 @@ class StructureGenerator():
         coord_seq_1 = []
         d_order = copy.deepcopy(c_order)
         critical_atom = int(atom_number/2)
-        print("critical_atom:", critical_atom)
+        logging.info("critical_atom: {}".format(critical_atom))
         for i in d_order[0:critical_atom]:
             i[1][0] -= a/2
             i[1][1] -= b/2
             i[1][2] -= c/2
             coord_seq_1.append(i[1])
-        print("d_order:\n", d_order)
-        print("c_order after", c_order)
-        print("parent_slab_1: \n", parent_slab)
+        logging.info("d_order: {} \n".format(d_order))
+        logging.info("c_order after: {} \n".format(c_order))
+        logging.info("parent_slab_1: {} \n".format(parent_slab))
         for i in d_order[critical_atom:int(atom_number)]:
             i[1][0] += a/2
             i[1][1] += b/2
